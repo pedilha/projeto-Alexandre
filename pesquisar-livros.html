@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesquisar Livros</title>
+    <link rel="stylesheet" href="style-pesquisar.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <header>
+        <a href="pagina-principal.html">Meus Livros</a>
+        <a href="pesquisar-livros.html" class="active">Pesquisar Livros</a>
+    </header>
+    
+
+    <div class="search-container">
+        <input type="text" placeholder="Pesquise um livro">
+        <button class="search-btn">&#128269;</button>
+    </div>
+
+    <div class="container">
+        <h2>Aqui estão os livros de acordo com sua pesquisa</h2>
+        <p>adicione aos seus livros</p>
+
+        <div class="card">
+            <img src="https://m.media-amazon.com/images/I/81Izv2GRWoL._SY425_.jpg" alt="Livro 1">
+            <div class="info">
+                <h3>É assim que começa</h3>
+                <p><strong>Colleen Hoover</strong></p>
+                <p>Quando Lily esbarra em Atlas ― com quem não fala há quase dois anos ―, parece que finalmente chegou o momento de retomar o relacionamento da adolescência, já que ele também está solteiro e parece retribuir os sentimentos de Lily. Mas apesar de divorciada, Lily não está exatamente livre de Ryle. Culpando Atlas pelo fim de seu casamento, Ryle não está nada disposto a aceitar o novo relacionamento de Lily, ainda mais com Atlas, o último homem que aceitaria ver perto de sua filha e da ex-esposa.</p>
+            </div>
+            <button>Adicionar</button>
+        </div>
+
+        <div class="card">
+            <img src="https://m.media-amazon.com/images/I/91r5G8RxqfL._SY425_.jpg" alt="Livro 2">
+            <div class="info">
+                <h3>É Assim que Acaba</h3>
+                <p><strong>Colleen Hoover</strong></p>
+                <p>Em É assim que acaba , Colleen Hoover nos apresenta Lily, uma jovem que se mudou de uma cidadezinha do Maine para Boston, se formou em marketing e abriu a própria floricultura. E é em um dos terraços de Boston que ela conhece Ryle, um neurocirurgião confiante, teimoso e talvez até um pouco arrogante, com uma grande aversão a relacionamentos, mas que se sente muito atraído por ela.</p>
+            </div>
+            <button>Adicionar</button>
+        </div>
+
+        <div class="card">
+            <img src="https://m.media-amazon.com/images/I/51msVf94L2L._SY445_SX342_.jpg" alt="Livro 3">
+            <div class="info">
+                <h3>Harry Potter e o Enigma do Príncipe</h3>
+                <p><strong> J.K. Rowling</strong></p>
+                <p>Harry Potter e o enigma do príncipe' dá continuidade à saga do jovem bruxo Harry Potter a partir do ponto em que o livro anterior parou o momento em que fica provado que o poder de Voldemort e dos Comensais da Morte, seus seguidores, cresce mais a cada dia, em meio à batalha entre o bem e o mal. </p>
+            </div>
+            <button>Adicionar</button>
+        </div>
+
+        <div class="card">
+            <img src="https://m.media-amazon.com/images/I/71fWaI5myqL._SY342_.jpg" alt="Livro 4">
+            <div class="info">
+                <h3>Diário de um Banana 1</h3>
+                <p><strong>Jeff Kinney</strong></p>
+                <p>Não é fácil ser criança. E ninguém sabe disso melhor do que Greg Heffley, que se vê mergulhado no mundo do ensino fundamental, onde fracotes são obrigados a dividir os corredores com garotos mais altos, mais malvados e que já se barbeiam. Em Diário de um Banana, o autor e ilustrados Jeff Kinney nos apresenta um herói improvável. Como Greg diz em seu diário. Só não espere que seja todo Querido Diário isso, Querido Diário aquilo. Para nossa sorte, o que Greg Heffley diz que fará e o que ele realmente faz são duas coisas bem diferentes.</p>
+            </div>
+            <button>Adicionar</button>
+        </div>
+
+        <div class="card">
+            <img src="https://m.media-amazon.com/images/I/71-ghLb8qML._SY342_.jpg" alt="Livro 5">
+            <div class="info">
+                <h3>Sapiens: Uma breve história da humanidade</h3>
+                <p><strong>Yuval Noah Harari</strong></p>
+                <p>O planeta Terra tem cerca de 4,5 bilhões de anos. Numa fração ínfima desse tempo, uma espécie entre incontáveis outras o dominou: nós, humanos. Somos os animais mais evoluídos e mais destrutivos que jamais viveram.
+                    Sapiens é a obra-prima de Yuval Noah Harari e o consagrou como um dos pensadores mais brilhantes da atualidade. Num feito surpreendente, que já fez deste livro um clássico contemporâneo, o historiador israelense aplica uma fascinante narrativa histórica a todas as instâncias do percurso humano sobre a Terra. Da Idade da Pedra ao Vale do Silício, temos aqui uma visão ampla e crítica da jornada em que deixamos de ser meros símios para nos tornarmos os governantes do mundo.</p>
+            </div>
+            <button>Adicionar</button>
+        </div>
+        
+    </div>
+</body>
+<script>
+    // Carrega e aplica o tema salvo no localStorage
+    function loadTheme() {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark-mode') {
+            document.body.classList.add('dark-mode');
+        } else {
+            document.body.classList.remove('dark-mode');
+        }
+    }
+
+    // Aplica o tema ao carregar a página
+    loadTheme();
+</script>
+
+
+</html>

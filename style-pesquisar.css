@@ -1,0 +1,241 @@
+/* Estilos globais */
+:root {
+    --bg-gradient: linear-gradient(to bottom right, #3a1c71, #d76d77, #ffaf7b); /* Gradiente claro */
+    --text-color: #ffffff; /* Texto claro */
+    --card-bg-color: #f7d9db; /* Fundo dos cartões */
+    --nav-bg-color: #F7F3E7; /* Fundo da navegação */
+    --button-bg-color: #e4c1f9; /* Fundo do botão */
+    --button-hover-bg-color: #c08497; /* Hover do botão */
+}
+
+/* Modo escuro */
+.dark-mode {
+    --bg-gradient: linear-gradient(to bottom right, #ffaf7b, #d76d77, #3a1c71); /* Gradiente invertido */
+    --text-color: #2e2a3b; /* Texto escuro */
+    --card-bg-color: #4e3b31; /* Fundo dos cartões */
+    --nav-bg-color: #3a1c71; /* Fundo da navegação */
+    --button-bg-color: #ffaf7b; /* Fundo do botão */
+    --button-hover-bg-color: #e0956d; /* Hover do botão */
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Importação da fonte */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+/* Aplicação global */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to bottom right, #3a1c71, #d76d77, #ffaf7b);
+    color: #ffffff;
+}
+
+/* Títulos */
+h1, h2, h3 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    color: #2e2a3b;
+}
+
+/* Texto padrão */
+p, label {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    color: #555;
+}
+
+/* Cabeçalho */
+header {
+    background-color: #F7F3E7; /* Fundo neutro */
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+header a {
+    text-decoration: none;
+    color: #2e2a3b; /* Texto escuro */
+    font-size: 18px;
+    padding: 10px 20px;
+    background-color: #e4c1f9; /* Fundo pastel */
+    border-radius: 25px;
+    margin: 0 10px;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+header a:hover {
+    background-color: #c08497;
+    transform: translateY(-3px); /* Elevação no hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+header a.active {
+    background-color: #c08497; /* Indicação de página ativa */
+}
+
+/* Barra de pesquisa */
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.search-container input {
+    width: 400px; /* Ajuste de largura */
+    padding: 10px;
+    border-radius: 25px;
+    border: 2px solid #ffaf7b; /* Destaque */
+    outline: none;
+    background-color: white;
+    padding-left: 20px;
+    font-size: 16px;
+}
+
+.search-container button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    margin-left: -40px;
+    transition: transform 0.2s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.search-container button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1); /* Leve ampliação */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.search-container button:active {
+    transform: scale(0.9); /* Redução ao clicar */
+}
+
+/* Container */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.container h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.container p {
+    color: #ffffff; /* Texto branco */
+    margin-bottom: 20px;
+}
+
+/* Cartões */
+.card {
+    display: flex;
+    background-color: #f7d9db; /* Fundo pastel */
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra padrão */
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.05); /* Ampliação leve */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Sombra aumentada */
+}
+
+/* Imagem do livro */
+.card img {
+    width: 100px;
+    height: 150px;
+    border-radius: 5px;
+    background-color: #ececec;
+    margin-right: 20px;
+    transition: transform 0.3s ease; /* Suavidade para imagens */
+}
+
+.card:hover img {
+    transform: translateY(-10px); /* Elevação da imagem no hover */
+}
+
+/* Informações do livro */
+.card .info {
+    flex: 1;
+}
+
+.card .info h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+    color: #2e2a3b; /* Texto escuro */
+}
+
+.card .info p {
+    color: #555; /* Texto suave */
+    margin-bottom: 10px;
+}
+
+/* Botões dos cartões */
+.card button {
+    padding: 10px 20px;
+    background-color: #ffaf7b;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    color: white; /* Texto branco */
+}
+
+.card button:hover {
+    background-color: #e0956d;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.card button:active {
+    background-color: #d0805c;
+    transform: translateY(1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+    }
+
+    .search-container input {
+        width: 80%; /* Redução para dispositivos menores */
+    }
+
+    .card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .card img {
+        margin-bottom: 10px;
+    }
+}
+/* Animação de entrada suave */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px); /* Vem de baixo */
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0); /* Fica na posição final */
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.6s ease-out; /* Duração e suavidade */
+    opacity: 0; /* Inicia invisível */
+    animation-fill-mode: forwards; /* Mantém a posição final */
+}
