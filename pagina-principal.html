@@ -40,16 +40,22 @@ function createBookCard({ id, title, author, totalPages, image, currentPage }) {
         </div>
     `;
 }
+
 // Função para carregar livros do localStorage
 function loadSavedBooks() {
     const savedBooks = JSON.parse(localStorage.getItem("savedBooks")) || [];
     const bookGrid = document.getElementById("book-grid");
 
-    bookGrid.innerHTML = ""; // Limpa o grid antes de carregar os livros
-    savedBooks.forEach(book => {
-        bookGrid.insertAdjacentHTML("beforeend", createBookCard(book));
-    });
+    if (savedBooks.length === 0) {
+        bookGrid.innerHTML = `<div class="empty-grid-message">Você ainda não adicionou livros à sua biblioteca.</div>`;
+    } else {
+        bookGrid.innerHTML = ""; // Limpa o grid antes de carregar os livros
+        savedBooks.forEach(book => {
+            bookGrid.insertAdjacentHTML("beforeend", createBookCard(book));
+        });
+    }
 }
+
 // Atualizar Página Atual
 document.addEventListener("click", function (e) {
     if (e.target.classList.contains("update-btn")) {

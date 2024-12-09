@@ -1,7 +1,7 @@
 /* Estilos globais */
 :root {
     --bg-gradient: linear-gradient(to bottom right, #3a1c71, #d76d77, #ffaf7b); /* Gradiente claro */
-    --text-color: #ffffff; /* Texto claro */
+    --text-color: #000000; /* Texto claro */
     --card-bg-color: #f7d9db; /* Fundo dos cartões */
     --nav-bg-color: #F7F3E7; /* Fundo da navegação */
     --button-bg-color: #e4c1f9; /* Fundo do botão */
@@ -11,8 +11,8 @@
 /* Modo escuro */
 .dark-mode {
     --bg-gradient: linear-gradient(to bottom right, #ffaf7b, #d76d77, #3a1c71); /* Gradiente invertido */
-    --text-color: #2e2a3b; /* Texto escuro */
-    --card-bg-color: #4e3b31; /* Fundo dos cartões */
+    --text-color: #ffffff; /* Texto escuro */
+    --card-bg-color: #3a1c71; /* Fundo dos cartões */
     --nav-bg-color: #3a1c71; /* Fundo da navegação */
     --button-bg-color: #ffaf7b; /* Fundo do botão */
     --button-hover-bg-color: #e0956d; /* Hover do botão */
@@ -23,9 +23,6 @@
     padding: 0;
     box-sizing: border-box;
 }
-
-/* Importação da fonte */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
 /* Aplicação global */
 body {
@@ -39,7 +36,7 @@ body {
     display: flex;
     justify-content: center;
     gap: 20px;
-    padding: 15px;
+    padding: 20px;
     background-color: var(--nav-bg-color);
     border-bottom: 2px solid rgba(0, 0, 0, 0.1);
 }
@@ -60,20 +57,29 @@ body {
     transform: translateY(-2px);
 }
 
-.nav-btn:active {
-    transform: translateY(1px);
-}
-
 /* Container de livros */
 .book-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(5, 1fr); /* Sempre 5 colunas */
     gap: 20px;
     padding: 20px;
+    justify-items: center;
+}
+
+/* Mensagem para lista vazia */
+.empty-grid-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh; /* Altura mínima */
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--text-color);
 }
 
 /* Cartões */
 .book-card {
+    width: 200px; /* Tamanho fixo */
     background-color: var(--card-bg-color);
     border-radius: 10px;
     padding: 15px;
@@ -89,30 +95,26 @@ body {
 /* Imagem do livro */
 .book-img img {
     width: 100%;
-    height: auto;
-    max-height: 150px;
+    height: 150px;
+    object-fit: cover;
     border-radius: 5px;
     margin-bottom: 10px;
-    background-color: #ececec;
-    object-fit: cover;
 }
 
 /* Informações do livro */
 .book-info h4 {
-    font-size: 18px;
+    font-size: 16px;
     margin-bottom: 5px;
-    color: var(--text-color);
 }
 
 .book-info p {
     font-size: 14px;
     margin-bottom: 10px;
-    color: var(--text-color);
 }
 
 /* Campo de entrada para alterar páginas */
 .page-input {
-    width: 80%;
+    width: calc(100% - 20px);
     margin: 10px auto;
     display: block;
     padding: 8px;
@@ -123,13 +125,12 @@ body {
 /* Botões de ação */
 .actions {
     display: flex;
-    justify-content: center;
-    gap: 10px;
+    justify-content: space-between;
     margin-top: 10px;
 }
 
 .update-btn, .remove-btn {
-    padding: 8px 15px;
+    padding: 8px 12px;
     background-color: var(--button-bg-color);
     border: none;
     border-radius: 20px;
@@ -142,19 +143,12 @@ body {
     background-color: var(--button-hover-bg-color);
     transform: translateY(-2px);
 }
-
-.update-btn:active, .remove-btn:active {
-    background-color: #d0805c;
-    transform: translateY(1px);
-}
-
 .remove-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     font-size: 18px;
-    padding: 5px 10px;
+    padding: 5px;
+    text-align: center;
 }
+
 
 /* Animação de entrada suave */
 @keyframes fadeIn {

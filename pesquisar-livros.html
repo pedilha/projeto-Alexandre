@@ -30,8 +30,9 @@
 <script>
 // Variáveis de Estado
 let currentQuery = ""; // Última consulta feita
-let currentPage = 0;  // Página atual
+let currentPage = 0; // Página atual
 let isLoading = false; // Evita chamadas múltiplas
+let totalItems = null; // Total de itens retornados pela API
 
 // Função para adicionar o livro aos "Meus Livros"
 function addToMyBooks(book) {
@@ -83,6 +84,9 @@ function createBookCard(book) {
 
 // Função de pesquisa
 async function searchBooks(query, startIndex = 0) {
+    if (isLoading) return; // Evita chamadas simultâneas
+    isLoading = true;
+
     const endpoint = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&startIndex=${startIndex}&maxResults=10`;
 
     try {
@@ -90,7 +94,10 @@ async function searchBooks(query, startIndex = 0) {
         const data = await response.json();
 
         const bookGrid = document.getElementById("book-grid");
-        if (startIndex === 0) bookGrid.innerHTML = "";
+        if (startIndex === 0) {
+            bookGrid.innerHTML = ""; // Limpa os resultados ao iniciar nova pesquisa
+            totalItems = data.totalItems || 0; // Atualiza o total de itens
+        }
 
         if (data.items && data.items.length > 0) {
             data.items.forEach(book => {
@@ -102,6 +109,8 @@ async function searchBooks(query, startIndex = 0) {
     } catch (error) {
         console.error("Erro ao buscar livros:", error);
         document.getElementById("book-grid").innerHTML = "<p>Erro ao carregar livros. Tente novamente mais tarde.</p>";
+    } finally {
+        isLoading = false; // Libera a variável para novas buscas
     }
 }
 
@@ -131,14 +140,12 @@ document.addEventListener("click", (e) => {
     }
 });
 
-
-
-
-
 // Clique para pesquisar livros
 document.querySelector(".search-btn").addEventListener("click", () => {
     const query = document.querySelector(".search-input").value.trim();
     if (query) {
+        currentQuery = query; // Atualiza a consulta atual
+        currentPage = 0; // Reseta a página atual
         searchBooks(query);
     }
 });
@@ -148,9 +155,11 @@ document.querySelector(".search-btn").addEventListener("click", () => {
 window.addEventListener("scroll", () => {
     if (
         window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 &&
-        !isLoading && currentQuery
+        !isLoading &&
+        currentQuery &&
+        currentPage * 10 < totalItems // Verifica se ainda há itens para carregar
     ) {
-        currentPage += 10;  // Próxima página
+        currentPage += 10; // Incrementa o índice de página
         searchBooks(currentQuery, currentPage);
     }
 });
