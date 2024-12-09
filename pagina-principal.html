@@ -10,10 +10,43 @@
 <body>
     <div class="navbar">
         <button id="toggle-theme" class="nav-btn">Alternar Tema</button>
+        <button id="add-book" class="nav-btn">Adicionar Livro</button>
         <a href="pesquisar-livros.html">
             <button class="nav-btn">Pesquisar Livros</button>
         </a>
     </div>
+    
+    <div id="add-book-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Adicionar Novo Livro</h2>
+            <form id="add-book-form">
+                <div>
+                    <label for="book-title">Título</label>
+                    <input type="text" id="book-title" placeholder="Digite o título do livro" required>
+                </div>
+                <div>
+                    <label for="book-author">Autor</label>
+                    <input type="text" id="book-author" placeholder="Digite o autor" required>
+                </div>
+                <div>
+                    <label for="book-pages">Número de Páginas</label>
+                    <input type="number" id="book-pages" placeholder="Digite o número de páginas" min="1" required>
+                </div>
+                <div>
+                    <label for="book-image">Imagem do Livro</label>
+                    <input type="file" id="book-image" accept="image/*" required>
+                </div>
+                <div id="image-preview">
+                    <p>Pré-visualização da Imagem:</p>
+                    <img id="preview-img" src="" alt="Pré-visualização" style="display: none;">
+                </div>
+                <button type="submit" class="submit-btn">Cadastrar</button>
+            </form>
+        </div>
+    </div>
+    
+    
 
     <div class="book-grid" id="book-grid">
         <!-- Livros serão carregados dinamicamente aqui -->
@@ -47,14 +80,23 @@ function loadSavedBooks() {
     const bookGrid = document.getElementById("book-grid");
 
     if (savedBooks.length === 0) {
-        bookGrid.innerHTML = `<div class="empty-grid-message">Você ainda não adicionou livros à sua biblioteca.</div>`;
+        // Aplica diretamente a mensagem de estado vazio
+        bookGrid.innerHTML = `<div class="empty-state">Você ainda não adicionou livros à sua biblioteca.</div>`;
+        bookGrid.style.display = "flex"; // Garante que o grid se comporte corretamente
+        bookGrid.style.justifyContent = "center";
+        bookGrid.style.alignItems = "center";
     } else {
-        bookGrid.innerHTML = ""; // Limpa o grid antes de carregar os livros
+        // Limpa o grid antes de carregar os livros
+        bookGrid.style.display = "grid"; // Retorna ao estilo original do grid
+        bookGrid.innerHTML = "";
         savedBooks.forEach(book => {
             bookGrid.insertAdjacentHTML("beforeend", createBookCard(book));
         });
     }
 }
+
+
+
 
 // Atualizar Página Atual
 document.addEventListener("click", function (e) {
@@ -117,6 +159,87 @@ function toggleTheme() {
 }
 
 toggleThemeButton.addEventListener('click', toggleTheme);
+// Referências de elementos
+const addBookButton = document.getElementById("add-book");
+const modal = document.getElementById("add-book-modal");
+const closeBtn = document.querySelector(".close-btn");
+const addBookForm = document.getElementById("add-book-form");
+const previewImg = document.getElementById("preview-img");
+const bookImageInput = document.getElementById("book-image");
+
+// Abrir o modal
+addBookButton.addEventListener("click", () => {
+    modal.style.display = "block";
+});
+
+// Fechar o modal
+closeBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+});
+
+// Fechar o modal ao clicar fora
+window.addEventListener("click", (e) => {
+    if (e.target === modal) {
+        modal.style.display = "none";
+    }
+});
+
+// Pré-visualização de imagem
+bookImageInput.addEventListener("change", function () {
+    const file = this.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            previewImg.src = e.target.result;
+            previewImg.style.display = "block";
+        };
+        reader.readAsDataURL(file);
+    } else {
+        previewImg.src = "";
+        previewImg.style.display = "none";
+    }
+});
+
+// Cadastro de Livro
+addBookForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const title = document.getElementById("book-title").value;
+    const author = document.getElementById("book-author").value;
+    const pages = parseInt(document.getElementById("book-pages").value, 10);
+    const image = previewImg.src;
+
+    if (!image || !title || !author || pages <= 0) {
+        alert("Preencha todos os campos corretamente.");
+        return;
+    }
+
+    const newBook = {
+        id: Date.now().toString(),
+        title,
+        author,
+        totalPages: pages,
+        image,
+        currentPage: 1,
+    };
+
+    // Salva no LocalStorage
+    const savedBooks = JSON.parse(localStorage.getItem("savedBooks")) || [];
+    savedBooks.push(newBook);
+    localStorage.setItem("savedBooks", JSON.stringify(savedBooks));
+
+    // Atualiza a exibição
+    loadSavedBooks();
+
+    // Limpa e fecha o formulário
+    addBookForm.reset();
+    previewImg.src = "";
+    previewImg.style.display = "none";
+    modal.style.display = "none";
+
+    alert(`"${newBook.title}" foi adicionado com sucesso!`);
+});
+
 
 // Carregar os livros ao iniciar
 window.onload = () => {

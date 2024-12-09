@@ -1,21 +1,21 @@
 /* Variáveis de Cores */
 :root {
-    --bg-gradient: linear-gradient(to bottom right, #3a1c71, #d76d77, #ffaf7b);
-    --text-color: #000000;
-    --card-bg-color: #f7d9db;
-    --nav-bg-color: #F7F3E7;
-    --button-bg-color: #e4c1f9;
-    --button-hover-bg-color: #c08497;
+    --bg-gradient: linear-gradient(to bottom right, #00cbfe, #80e5fe, #f7f7f7);
+    --text-color: #050505;
+    --card-bg-color: #00b8d8;
+    --nav-bg-color: #a5edff;
+    --button-bg-color: #00cbfe;
+    --button-hover-bg-color: #219fbf;
 }
 
-/* Modo Escuro */
+/* Modo escuro */
 .dark-mode {
-    --bg-gradient: linear-gradient(to bottom right, #ffaf7b, #d76d77, #3a1c71);
-    --text-color: #ffffff;
-    --card-bg-color: #3a1c71;
-    --nav-bg-color: #3a1c71;
-    --button-bg-color: #ffaf7b;
-    --button-hover-bg-color: #e0956d;
+    --bg-gradient: linear-gradient(to bottom right, #5902fb, #6a37ca, #3a2464); /* Gradiente invertido */
+    --text-color: #ffffff; /* Texto escuro */
+    --card-bg-color: #3a1c71; /* Fundo dos cartões */
+    --nav-bg-color: #3a1c71; /* Fundo da navegação */
+    --button-bg-color: #8f78f7; /* Fundo do botão */
+    --button-hover-bg-color: #c5b8fd; /* Hover do botão */
 }
 
 /* Estilo Global */

@@ -1,21 +1,21 @@
 /* Estilos globais */
 :root {
-    --bg-gradient: linear-gradient(to bottom right, #3a1c71, #d76d77, #ffaf7b); /* Gradiente claro */
-    --text-color: #000000; /* Texto claro */
-    --card-bg-color: #f7d9db; /* Fundo dos cartões */
-    --nav-bg-color: #F7F3E7; /* Fundo da navegação */
-    --button-bg-color: #e4c1f9; /* Fundo do botão */
-    --button-hover-bg-color: #c08497; /* Hover do botão */
+    --bg-gradient: linear-gradient(to bottom right, #00cbfe, #80e5fe, #f7f7f7);
+    --text-color: #050505;
+    --card-bg-color: #00b8d8;
+    --nav-bg-color: #a5edff;
+    --button-bg-color: #00cbfe;
+    --button-hover-bg-color: #219fbf;
 }
 
 /* Modo escuro */
 .dark-mode {
-    --bg-gradient: linear-gradient(to bottom right, #ffaf7b, #d76d77, #3a1c71); /* Gradiente invertido */
+    --bg-gradient: linear-gradient(to bottom right, #5902fb, #6a37ca, #3a2464); /* Gradiente invertido */
     --text-color: #ffffff; /* Texto escuro */
     --card-bg-color: #3a1c71; /* Fundo dos cartões */
     --nav-bg-color: #3a1c71; /* Fundo da navegação */
-    --button-bg-color: #ffaf7b; /* Fundo do botão */
-    --button-hover-bg-color: #e0956d; /* Hover do botão */
+    --button-bg-color: #8f78f7; /* Fundo do botão */
+    --button-hover-bg-color: #c5b8fd; /* Hover do botão */
 }
 
 * {
@@ -66,16 +66,23 @@ body {
     justify-items: center;
 }
 
-/* Mensagem para lista vazia */
-.empty-grid-message {
+.empty-state {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 60vh; /* Altura mínima */
-    font-size: 20px;
-    font-weight: bold;
+    height: 84vh; /* Ocupa toda a altura da tela */
+    width: 100%; /* Garante que ocupe toda a largura */
+    text-align: center;
+    background: var(--bg-gradient);
     color: var(--text-color);
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0; /* Remove margens */
+    padding: 0; /* Remove preenchimento */
 }
+
+
+
 
 /* Cartões */
 .book-card {
@@ -179,4 +186,109 @@ body {
     .book-grid {
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     }
+}
+
+/* Modal de Cadastro */
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--nav-bg-color);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    width: 400px;
+    max-width: 90%;
+    z-index: 1000;
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.close-btn {
+    font-size: 20px;
+    cursor: pointer;
+    align-self: flex-end;
+    color: var(--button-hover-bg-color);
+    transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+    color: var(--button-bg-color);
+}
+
+.modal-content h2 {
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--text-color);
+}
+
+.modal-content label {
+    font-size: 14px;
+    color: var(--text-color);
+    margin-bottom: 5px;
+}
+
+.modal-content input[type="text"],
+.modal-content input[type="number"],
+.modal-content input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.modal-content input[type="file"] {
+    padding: 5px;
+}
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center; /* Centraliza os elementos horizontalmente */
+}
+
+.modal-content button {
+    background-color: var(--button-bg-color);
+    color: var(--text-color);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-size: 14px;
+    text-align: center;
+    align-self: center; /* Garante que o botão fique centralizado */
+    width: 50%; /* Opcional: ajuste a largura do botão, se necessário */
+}
+
+.modal-content button:hover {
+    background-color: var(--button-hover-bg-color);
+    transform: translateY(-2px);
+}
+
+.modal-content button:active {
+    transform: translateY(1px);
+}
+
+#image-preview {
+    text-align: center;
+    margin-top: 10px;
+}
+
+#image-preview img {
+    max-width: 100%;
+    max-height: 150px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: block;
+    border: 1px solid #ccc;
 }
