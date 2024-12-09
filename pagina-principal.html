@@ -6,24 +6,6 @@
     <title>Biblioteca</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        /* Animação de fade-in */
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .fade-in {
-            opacity: 0;
-            animation: fadeIn 0.6s ease-out forwards;
-        }
-    </style>
 </head>
 <body>
     <div class="navbar">
@@ -32,191 +14,111 @@
             <button class="nav-btn">Pesquisar Livros</button>
         </a>
     </div>
-    
-    <div id="spinner" class="spinner" style="display: none;"></div>
-
-    <div class="search-bar">
-        <input type="text" placeholder="Pesquise seu livro" class="search-input">
-        <button class="search-btn">&#128269;</button>
-    </div>
-    
 
     <div class="book-grid" id="book-grid">
-        <!-- Book-cards iniciais -->
-        <div class="book-card fade-in">
-            <div class="book-img">
-                <img src="https://m.media-amazon.com/images/I/41897yAI4LL._SY445_SX342_.jpg" alt="Imagem do Livro">
-            </div>
-            <div class="book-info">
-                <h4>Harry Poter e a pedra filosofal</h4>
-                <p><strong>J.K.Rowling</strong></p>
-                <p>Página atual: <span class="current-page">102</span></p>
-                <input type="number" class="page-input" placeholder="Nova página">
-                <button class="update-btn">Atualizar</button>
-            </div>
-        </div>
+        <!-- Livros serão carregados dinamicamente aqui -->
     </div>
 
     <script>
-        // Lista de livros para carregar
-        const books = [
-            {
-                img: "https://m.media-amazon.com/images/I/51DDABrpU5L._SY445_SX342_.jpg",
-                title: "Harry Poter e o Calice de fogo",
-                author: "J.K.Rowling",
-                page: 350
-            },
-            {
-                img: "https://m.media-amazon.com/images/I/91R8S52UP6L._SY425_.jpg",
-                title: "A paciente silenciosa",
-                author: "Alex Michaelides",
-                page: 55
-            },
-            {
-                img: "https://m.media-amazon.com/images/I/617VPKAt13L._SY425_.jpg",
-                title: "Materia escura",
-                author: "Blake Crouch",
-                page: 257
-            },
-            {
-                img: "https://m.media-amazon.com/images/I/41yToN1cOML._SY445_SX342_.jpg",
-                title: "A Culpa É das Estrelas",
-                author: "John Green",
-                page: 17
-            },
-            {
-                img: "https://m.media-amazon.com/images/I/51wt58SEkUL._SY445_SX342_.jpg",
-                title: "O iluminado",
-                author: "Stephen King",
-                page: 102
-            },
-            {
-                img: "https://m.media-amazon.com/images/I/41--5-gbIhL._SY445_SX342_.jpg",
-                title: "Extraordinario",
-                author: "R. J. Palacio",
-                page: 350
-            },
-            {
-                img: "https://m.media-amazon.com/images/I/61bmaEI9amL._SY425_.jpg",
-                title: "O mar de monstros: Série Percy Jackson e os olimpianos",
-                author: "Rick Riordan",
-                page: 228
-            },
-            {
-                img: "https://m.media-amazon.com/images/I/51z0s3GcvwL._SY445_SX342_.jpg",
-                title: "It: A coisa",
-                author: "Stephen King",
-                page: 228
-            }
-        ];
+// Função para criar um card de livro
+function createBookCard({ id, title, author, totalPages, image, currentPage }) {
+    return `
+        <div class="book-card fade-in">
+            <div class="book-img">
+                <img src="${image}" alt="${title}">
+            </div>
+            <div class="book-info">
+                <h4>${title}</h4>
+                <p><strong>${author}</strong></p>
+                <p>Página atual: <span class="current-page">${currentPage}</span> / ${totalPages}</p>
+                <input type="number" class="page-input" placeholder="Nova página">
+                <div class="actions">
+                    <button class="update-btn" data-id="${id}">Atualizar Página</button>
+                    <button class="remove-btn" data-id="${id}">🗑️</button>
+                </div>
+            </div>
+        </div>
+    `;
+}
+// Função para carregar livros do localStorage
+function loadSavedBooks() {
+    const savedBooks = JSON.parse(localStorage.getItem("savedBooks")) || [];
+    const bookGrid = document.getElementById("book-grid");
 
-        const bookGrid = document.getElementById('book-grid');
-        let currentBookIndex = 0;
+    bookGrid.innerHTML = ""; // Limpa o grid antes de carregar os livros
+    savedBooks.forEach(book => {
+        bookGrid.insertAdjacentHTML("beforeend", createBookCard(book));
+    });
+}
+// Atualizar Página Atual
+document.addEventListener("click", function (e) {
+    if (e.target.classList.contains("update-btn")) {
+        const bookId = e.target.getAttribute("data-id"); // Obtém o ID do livro
+        const card = e.target.closest(".book-card");
+        const input = card.querySelector(".page-input");
+        const currentPageDisplay = card.querySelector(".current-page");
 
-        // Função para carregar mais livros
-        function loadMoreBooks() {
-            for (let i = 0; i < 3; i++) { // Carrega 3 livros por vez
-                if (currentBookIndex < books.length) {
-                    const book = books[currentBookIndex];
-                    const bookCard = document.createElement('div');
-                    bookCard.classList.add('book-card', 'fade-in'); // Adiciona a classe fade-in
-                    bookCard.innerHTML = `
-                        <div class="book-img">
-                            <img src="${book.img}" alt="Imagem do Livro">
-                        </div>
-                        <div class="book-info">
-                            <h4>${book.title}</h4>
-                            <p><strong>${book.author}</strong></p>
-                            <p>Página atual: <span class="current-page">${book.page}</span></p>
-                            <input type="number" class="page-input" placeholder="Nova página">
-                            <button class="update-btn">Atualizar</button>
-                        </div>
-                    `;
-                    bookGrid.appendChild(bookCard);
-                    currentBookIndex++;
+        const newPage = parseInt(input.value, 10);
+        if (!isNaN(newPage) && newPage > 0) {
+            const savedBooks = JSON.parse(localStorage.getItem("savedBooks")) || [];
+            const updatedBooks = savedBooks.map(book => {
+                if (book.id === bookId) {
+                    book.currentPage = newPage; // Atualiza a página atual
                 }
-            }
+                return book;
+            });
+            localStorage.setItem("savedBooks", JSON.stringify(updatedBooks));
+            currentPageDisplay.textContent = newPage; // Atualiza o display
+            input.value = ""; // Limpa o campo de entrada
+        } else {
+            alert("Por favor, insira um número válido.");
         }
+    }
+});
+// Remover Livro
+document.addEventListener("click", function (e) {
+    if (e.target.classList.contains("remove-btn")) {
+        const bookId = e.target.getAttribute("data-id"); // Obtém o ID do livro do botão
+        const confirmDelete = confirm("Tem certeza de que deseja remover este livro?");
+        if (confirmDelete) {
+            const savedBooks = JSON.parse(localStorage.getItem("savedBooks")) || [];
+            const updatedBooks = savedBooks.filter(book => book.id !== bookId); // Filtra o livro a ser excluído
+            localStorage.setItem("savedBooks", JSON.stringify(updatedBooks)); // Atualiza o localStorage
+            loadSavedBooks(); // Recarrega os livros
+        }
+    }
+});
+// Alternar Tema
+const toggleThemeButton = document.getElementById('toggle-theme');
 
-        // Evento de rolagem para carregar mais livros
-        window.addEventListener('scroll', () => {
-            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 50) {
-                loadMoreBooks();
-            }
-        });
+function loadTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark-mode') {
+        document.body.classList.add('dark-mode');
+    } else {
+        document.body.classList.remove('dark-mode');
+    }
+}
 
-        // Carrega os primeiros livros ao iniciar
-        loadMoreBooks();
+function toggleTheme() {
+    if (document.body.classList.contains('dark-mode')) {
+        document.body.classList.remove('dark-mode');
+        localStorage.setItem('theme', 'light-mode');
+    } else {
+        document.body.classList.add('dark-mode');
+        localStorage.setItem('theme', 'dark-mode');
+    }
+}
 
-        // Adiciona evento de clique para atualizar a página
-        document.addEventListener('click', function(event) {
-            if (event.target.classList.contains('update-btn')) {
-                const card = event.target.closest('.book-card');
-                const input = card.querySelector('.page-input');
-                const currentPageDisplay = card.querySelector('.current-page');
+toggleThemeButton.addEventListener('click', toggleTheme);
 
-                // Verifica se o valor do input é um número válido
-                const newPage = parseInt(input.value);
-                if (!isNaN(newPage) && newPage > 0) {
-                    currentPageDisplay.textContent = newPage; // Atualiza a página atual
-                    input.value = ''; // Limpa o campo de entrada
-                } else {
-                    alert('Por favor, insira um número de página válido.');
-                }
-            }
-        });
+// Carregar os livros ao iniciar
+window.onload = () => {
+    loadTheme();
+    loadSavedBooks();
+};
+
+
     </script>
-    <script>
-        // Função para mostrar o spinner
-        function showSpinner() {
-            document.getElementById('spinner').style.display = 'block';
-        }
-
-        // Função para ocultar o spinner
-        function hideSpinner() {
-            document.getElementById('spinner').style.display = 'none';
-        }
-
-        // Exemplo de uso: mostrar o spinner antes de uma requisição
-        showSpinner();
-
-        // Simulação de uma requisição (ex. API) usando setTimeout
-        setTimeout(() => {
-            hideSpinner(); // Esconde o spinner após a "requisição"
-        }, 3000); // Esconde após 3 segundos
-    </script>
-    <script>
-        const toggleThemeButton = document.getElementById('toggle-theme');
-    
-        // Carrega e aplica o tema salvo no localStorage
-        function loadTheme() {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark-mode') {
-                document.body.classList.add('dark-mode');
-            } else {
-                document.body.classList.remove('dark-mode');
-            }
-        }
-    
-        // Alterna o tema e salva no localStorage
-        function toggleTheme() {
-            if (document.body.classList.contains('dark-mode')) {
-                document.body.classList.remove('dark-mode');
-                localStorage.setItem('theme', 'light-mode'); // Salva o tema claro
-            } else {
-                document.body.classList.add('dark-mode');
-                localStorage.setItem('theme', 'dark-mode'); // Salva o tema escuro
-            }
-        }
-    
-        // Evento para alternar o tema
-        toggleThemeButton.addEventListener('click', toggleTheme);
-    
-        // Aplica o tema ao carregar a página
-        loadTheme();
-    </script>
-    
-    
-    
 </body>
 </html>

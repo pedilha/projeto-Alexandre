@@ -1,13 +1,4 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Importação da fonte */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-
-/* Estilos originais com gradiente (modo claro) */
+/* Estilos globais */
 :root {
     --bg-gradient: linear-gradient(to bottom right, #3a1c71, #d76d77, #ffaf7b); /* Gradiente claro */
     --text-color: #ffffff; /* Texto claro */
@@ -17,257 +8,181 @@
     --button-hover-bg-color: #c08497; /* Hover do botão */
 }
 
-/* Modo escuro com gradiente invertido */
+/* Modo escuro */
 .dark-mode {
     --bg-gradient: linear-gradient(to bottom right, #ffaf7b, #d76d77, #3a1c71); /* Gradiente invertido */
     --text-color: #2e2a3b; /* Texto escuro */
-    --card-bg-color: #4e3b31; /* Fundo dos cartões invertido */
-    --nav-bg-color: #3a1c71; /* Fundo da navegação invertido */
-    --button-bg-color: #ffaf7b; /* Fundo do botão invertido */
-    --button-hover-bg-color: #e0956d; /* Hover do botão invertido */
+    --card-bg-color: #4e3b31; /* Fundo dos cartões */
+    --nav-bg-color: #3a1c71; /* Fundo da navegação */
+    --button-bg-color: #ffaf7b; /* Fundo do botão */
+    --button-hover-bg-color: #e0956d; /* Hover do botão */
 }
 
-/* Aplicação das variáveis */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Importação da fonte */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+/* Aplicação global */
 body {
-    background: var(--bg-gradient); /* Fundo com gradiente */
-    color: var(--text-color);
     font-family: 'Poppins', sans-serif;
-    transition: background 0.3s ease, color 0.3s ease;
+    background: var(--bg-gradient);
+    color: var(--text-color);
 }
 
+/* Navbar */
 .navbar {
-    background-color: var(--nav-bg-color);
     display: flex;
     justify-content: center;
-    padding: 20px;
-}
-
-.book-card {
-    background-color: var(--card-bg-color);
-    color: var(--text-color);
-    border-radius: 10px;
-    padding: 20px;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    gap: 20px;
+    padding: 15px;
+    background-color: var(--nav-bg-color);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
 }
 
 .nav-btn {
+    padding: 10px 20px;
+    border: none;
     background-color: var(--button-bg-color);
     color: var(--text-color);
-    border: none;
-    padding: 15px 30px;
-    margin: 0 20px;
-    border-radius: 30px;
-    font-size: 18px;
+    border-radius: 25px;
     cursor: pointer;
+    font-size: 14px;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .nav-btn:hover {
     background-color: var(--button-hover-bg-color);
-    transform: translateY(-3px);
+    transform: translateY(-2px);
 }
-
-
 
 .nav-btn:active {
-    transform: translateY(1px); /* Recuo ao clicar */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transform: translateY(1px);
 }
 
-/* Barra de pesquisa */
-.search-bar {
-    display: flex;
-    justify-content: center;
-    margin: 30px 0;
-}
-
-.search-input {
-    width: 400px;
-    padding: 12px;
-    border-radius: 25px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-}
-
-.search-btn {
-    background-color: transparent;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    margin-left: -40px;
-    transition: transform 0.2s ease, background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.search-btn:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-    transform: scale(1.1); /* Leve ampliação no hover */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-.search-btn:active {
-    transform: scale(0.9); /* Redução ao clicar */
-}
-
-/* Grade de livros */
+/* Container de livros */
 .book-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-    padding: 40px;
-    justify-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
 }
 
+/* Cartões */
 .book-card {
-    background-color: #f7d9db; /* Fundo pastel */
+    background-color: var(--card-bg-color);
     border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Sombra padrão */
-    width: 240px;
-    padding: 20px;
-    text-align: center;
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .book-card:hover {
-    transform: scale(1.05); /* Ampliação leve */
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3); /* Sombra aumentada */
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
-.book-img {
-    height: 180px;
-    margin-bottom: 15px;
-}
-
+/* Imagem do livro */
 .book-img img {
     width: 100%;
-    height: 100%;
+    height: auto;
+    max-height: 150px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: #ececec;
     object-fit: cover;
-    border-radius: 10px;
-    transition: transform 0.3s ease; /* Suavidade para imagens */
 }
 
-.book-card:hover img {
-    transform: translateY(-10px); /* Elevação da imagem no hover */
-}
-
+/* Informações do livro */
 .book-info h4 {
-    margin: 15px 0 8px;
     font-size: 18px;
+    margin-bottom: 5px;
+    color: var(--text-color);
 }
 
 .book-info p {
-    font-size: 16px;
-    color: #555;
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: var(--text-color);
 }
 
-/* Campo de entrada */
+/* Campo de entrada para alterar páginas */
 .page-input {
-    width: 105px;
-    padding: 5px;
-    border: 2px solid #ffaf7b; /* Destaque */
+    width: 80%;
+    margin: 10px auto;
+    display: block;
+    padding: 8px;
+    border: 1px solid #ccc;
     border-radius: 5px;
+}
+
+/* Botões de ação */
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
     margin-top: 10px;
 }
 
-/* Botão de atualizar */
-.update-btn {
-    background-color: #ffaf7b; /* Fundo pastel */
-    color: white;
+.update-btn, .remove-btn {
+    padding: 8px 15px;
+    background-color: var(--button-bg-color);
     border: none;
-    padding: 5px 10px;
-    border-radius: 50px;
+    border-radius: 20px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    color: white;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.update-btn:hover {
-    background-color: #e0956d;
-    transform: translateY(-3px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+.update-btn:hover, .remove-btn:hover {
+    background-color: var(--button-hover-bg-color);
+    transform: translateY(-2px);
 }
 
-.update-btn:active {
+.update-btn:active, .remove-btn:active {
     background-color: #d0805c;
     transform: translateY(1px);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-/* Spinner */
-/* Spinner personalizado */
-.spinner {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 60px;
-    height: 60px;
-    border: 6px solid rgba(255, 255, 255, 0.3); /* Fundo translúcido */
-    border-top: 6px solid #ffaf7b; /* Cor do spinner */
-    border-radius: 50%;
-    animation: spin 1s linear infinite; /* Gira continuamente */
+.remove-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    padding: 5px 10px;
 }
 
-/* Animação do spinner */
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-
-/* Responsividade */
-@media (max-width: 1024px) {
-    .book-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 768px) {
-    .navbar {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .nav-btn {
-        margin-bottom: 10px;
-        width: 80%;
-    }
-
-    .search-bar {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .search-input {
-        width: 80%;
-        margin-bottom: 10px;
-    }
-
-    .book-grid {
-        grid-template-columns: 1fr;
-        padding: 10px;
-    }
-
-    .book-card {
-        width: 100%;
-    }
-}
 /* Animação de entrada suave */
 @keyframes fadeIn {
     0% {
         opacity: 0;
-        transform: translateY(20px); /* Vem de baixo */
+        transform: translateY(20px);
     }
     100% {
         opacity: 1;
-        transform: translateY(0); /* Fica na posição final */
+        transform: translateY(0);
     }
 }
 
 .fade-in {
-    animation: fadeIn 0.6s ease-out; /* Duração e suavidade */
-    opacity: 0; /* Inicia invisível */
-    animation-fill-mode: forwards; /* Mantém a posição final */
+    animation: fadeIn 0.6s ease-out;
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .book-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
 }
