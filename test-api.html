@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de API</title>
+</head>
+<body>
+    <h1>Teste de API</h1>
+    
+    <h2>GET - Listar Usuários</h2>
+    <button id="listar-usuarios">Listar Usuários</button>
+    <p id="resultado-get"></p>
+
+    <h2>POST - Criar Usuário</h2>
+    <form id="form-criar-usuario">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required>
+        <br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <br>
+        <label for="senha">Senha:</label>
+        <input type="password" id="senha" name="senha" required>
+        <br>
+        <button type="submit">Criar Usuário</button>
+    </form>
+    <p id="post-resultado"></p>
+
+    <script>
+        // GET - Listar Usuários
+        document.getElementById('listar-usuarios').addEventListener('click', async () => {
+            try {
+                const response = await fetch('http://localhost:5000/usuarios');
+                const data = await response.json();
+                document.getElementById('resultado-get').innerText = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('resultado-get').innerText = 'Erro ao listar usuários: ' + error.message;
+            }
+        });
+
+        // POST - Criar Usuário
+        document.getElementById('form-criar-usuario').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const nome = document.getElementById('nome').value;
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('senha').value;
+
+            try {
+                const response = await fetch('http://localhost:5000/usuarios', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ nome, email, senha })
+                });
+
+                const data = await response.json();
+                document.getElementById('post-resultado').innerText = data.message;
+            } catch (error) {
+                document.getElementById('post-resultado').innerText = 'Erro ao criar usuário: ' + error.message;
+            }
+        });
+    </script>
+</body>
+</html>

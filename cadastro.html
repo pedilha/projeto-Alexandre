@@ -43,32 +43,52 @@
     <script>
         const form = document.getElementById('cadastroForm');
         const btnCadastrar = document.getElementById('btnCadastrar');
-        
-        
+    
         function validarCampos() {
             const nome = document.getElementById('nome').value.trim();
             const email = document.getElementById('email').value.trim();
             const telefone = document.getElementById('telefone').value.trim();
             const senha = document.getElementById('senha').value.trim();
-
-            if (nome && email && telefone && senha) {
-                btnCadastrar.classList.replace('btn-secondary', 'btn-success'); 
-                btnCadastrar.disabled = false; 
-            } else {
-                btnCadastrar.classList.replace('btn-success', 'btn-secondary'); 
-                btnCadastrar.disabled = true; 
-        }
-    }
-
-        
-        form.addEventListener('input', validarCampos);
-
     
-        form.addEventListener('submit', function(event) {
+            if (nome && email && telefone && senha) {
+                btnCadastrar.classList.replace('btn-secondary', 'btn-success');
+                btnCadastrar.disabled = false;
+            } else {
+                btnCadastrar.classList.replace('btn-success', 'btn-secondary');
+                btnCadastrar.disabled = true;
+            }
+        }
+    
+        form.addEventListener('input', validarCampos);
+    
+        form.addEventListener('submit', async function(event) {
             event.preventDefault();
-            alert('Cadastro realizado com sucesso!');
-            window.location.href = 'index.html'; 
+    
+            const nome = document.getElementById('nome').value;
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('senha').value;
+    
+            try {
+                const response = await fetch('http://localhost:5000/usuarios', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ nome, email, senha }),
+                });
+    
+                if (response.ok) {
+                    alert('Cadastro realizado com sucesso!');
+                    window.location.href = 'index.html';
+                } else {
+                    const errorData = await response.json();
+                    alert(`Erro ao cadastrar: ${errorData.message}`);
+                }
+            } catch (error) {
+                alert('Erro ao conectar com o servidor. Tente novamente mais tarde.');
+            }
         });
     </script>
+    
 </body>
 </html>
